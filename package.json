@@ -1,0 +1,161 @@
+{
+  "name": "copilot-token-meter",
+  "displayName": "Copilot Token Meter",
+  "description": "Live input, output and reasoning token consumption for GitHub Copilot agent sessions, read from the local Copilot session store.",
+  "version": "0.1.0",
+  "publisher": "YoussefSaleh",
+  "author": {
+    "name": "Youssef Saleh",
+    "email": "yusufm.salh@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yusufmsalh/copilot-token-meter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yusufmsalh/copilot-token-meter/issues"
+  },
+  "homepage": "https://github.com/yusufmsalh/copilot-token-meter#readme",
+  "private": true,
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#16384F",
+    "theme": "dark"
+  },
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "copilot",
+    "tokens",
+    "usage",
+    "reasoning",
+    "credits"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "copilotTokenMeter",
+          "title": "Token Meter",
+          "icon": "media/meter.svg"
+        }
+      ]
+    },
+    "views": {
+      "copilotTokenMeter": [
+        {
+          "id": "copilotTokenMeter.usage",
+          "name": "Token Usage"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "copilotTokenMeter.refresh",
+        "title": "Refresh",
+        "category": "Token Meter",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "copilotTokenMeter.show",
+        "title": "Show Token Usage",
+        "category": "Token Meter"
+      },
+      {
+        "command": "copilotTokenMeter.toggleStatusBarScope",
+        "title": "Toggle Status Bar Scope (Latest Session / Today)",
+        "category": "Token Meter",
+        "icon": "$(arrow-swap)"
+      },
+      {
+        "command": "copilotTokenMeter.openSettings",
+        "title": "Open Settings",
+        "category": "Token Meter",
+        "icon": "$(gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "copilotTokenMeter.refresh",
+          "when": "view == copilotTokenMeter.usage",
+          "group": "navigation@1"
+        },
+        {
+          "command": "copilotTokenMeter.toggleStatusBarScope",
+          "when": "view == copilotTokenMeter.usage",
+          "group": "navigation@2"
+        },
+        {
+          "command": "copilotTokenMeter.openSettings",
+          "when": "view == copilotTokenMeter.usage",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Copilot Token Meter",
+      "properties": {
+        "copilotTokenMeter.databasePath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to the Copilot session store. Leave empty to use `~/.copilot/session-store.db`."
+        },
+        "copilotTokenMeter.refreshIntervalSeconds": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 300,
+          "description": "How often (in seconds) to check the session store for new model calls."
+        },
+        "copilotTokenMeter.statusBarScope": {
+          "type": "string",
+          "enum": [
+            "latestSession",
+            "today"
+          ],
+          "enumDescriptions": [
+            "Totals for the session with the most recent model call.",
+            "Totals for all sessions since local midnight."
+          ],
+          "default": "latestSession",
+          "description": "What the status bar counter measures."
+        },
+        "copilotTokenMeter.recentSessionCount": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 500,
+          "description": "Number of sessions listed under Recent sessions."
+        },
+        "copilotTokenMeter.dailyHistoryDays": {
+          "type": "number",
+          "default": 14,
+          "minimum": 1,
+          "maximum": 365,
+          "description": "Number of days listed under Daily."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "test:integration": "node test/integration/run.js",
+    "package": "npx --yes @vscode/vsce package",
+    "publish": "npx --yes @vscode/vsce publish"
+  }
+}

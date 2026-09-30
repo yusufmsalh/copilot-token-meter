@@ -8,6 +8,15 @@ Live token consumption for GitHub Copilot agent sessions, inside VS Code:
   and Daily. Each shows input (fresh / cache read / cache write), output, reasoning, AI credits and model calls, plus a
   per-model breakdown. Sessions drill down into turns, individual model calls and sub-agents.
 
+## Installation
+
+- **Marketplace**: search for "Copilot Token Meter" in the Extensions view, or run
+  `code --install-extension YoussefSaleh.copilot-token-meter`.
+- **VSIX file** (e.g. where the Marketplace is blocked): download
+  [copilot-token-meter-0.1.0.vsix](https://github.com/yusufmsalh/copilot-token-meter/raw/main/copilot-token-meter-0.1.0.vsix),
+  then run `code --install-extension copilot-token-meter-0.1.0.vsix` or use **Extensions: Install from VSIX...** in the
+  Command Palette.
+
 ## What the numbers mean
 
 | Metric | Meaning |
